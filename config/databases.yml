@@ -5,6 +5,14 @@ all:
   doctrine:
     class: sfDoctrineDatabase
     param:
-      dsn:      mysql:host=jobeet-db;dbname=jobeet
+      dsn: mysql:host=jobeet-db;dbname=jobeet
+      username: jobeet
+      password: jobeet
+
+test:
+  doctrine:
+    class: sfDoctrineDatabase
+    param:
+      dsn: mysql:host=jobeet-db;dbname=jobeet_test
       username: jobeet
       password: jobeet

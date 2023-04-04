@@ -10,6 +10,7 @@ RUN apt-get update \
         git libzip-dev unzip \
         libicu-dev \
         libpng-dev libmagickwand-dev xfonts-75dpi xfonts-base exiftool \
+        nano \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* \
     && docker-php-ext-configure exif \
     && pecl install apcu \
