@@ -7,7 +7,10 @@ class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
-    $this->enablePlugins('sfDoctrinePlugin');
+    $this->enablePlugins([
+      'sfDoctrinePlugin',
+      'sfDoctrineGuardPlugin',
+    ]);
     // enable test environment
     // $this->setEnvironment('test');
   }
