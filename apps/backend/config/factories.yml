@@ -22,11 +22,27 @@ test:
   mailer:
     param:
       delivery_strategy: none
+      transport:
+        class: Swift_SmtpTransport
+        param:
+          host:       sandbox.smtp.mailtrap.io
+          port:       2525
+          encryption: tls
+          username:   bd97b74ccf3798
+          password:   fb8f874e6ea039
 
 dev:
   mailer:
     param:
       delivery_strategy: none
+      transport:
+        class: Swift_SmtpTransport
+        param:
+          host: sandbox.smtp.mailtrap.io
+          port: 2525
+          encryption: tls
+          username: bd97b74ccf3798
+          password: fb8f874e6ea039
 
 all:
   routing:
