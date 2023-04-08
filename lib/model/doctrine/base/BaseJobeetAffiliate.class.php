@@ -40,79 +40,89 @@ Doctrine_Manager::getInstance()->bindComponent('JobeetAffiliate', 'doctrine');
  */
 abstract class BaseJobeetAffiliate extends sfDoctrineRecord
 {
-    public function setTableDefinition()
-    {
-        $this->setTableName('jobeet_affiliate');
-        $this->hasColumn('id', 'integer', 8, array(
-             'type' => 'integer',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => true,
-             'autoincrement' => true,
-             'length' => 8,
-             ));
-        $this->hasColumn('url', 'string', 255, array(
-             'type' => 'string',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 255,
-             ));
-        $this->hasColumn('email', 'string', 255, array(
-             'type' => 'string',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 255,
-             ));
-        $this->hasColumn('token', 'string', 255, array(
-             'type' => 'string',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 255,
-             ));
-        $this->hasColumn('is_active', 'integer', 1, array(
-             'type' => 'integer',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'default' => '0',
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 1,
-             ));
-        $this->hasColumn('created_at', 'timestamp', 25, array(
-             'type' => 'timestamp',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 25,
-             ));
-        $this->hasColumn('updated_at', 'timestamp', 25, array(
-             'type' => 'timestamp',
-             'fixed' => 0,
-             'unsigned' => false,
-             'primary' => false,
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 25,
-             ));
-    }
+     public function setTableDefinition()
+     {
+          $this->setTableName('jobeet_affiliate');
+          $this->hasColumn('id', 'integer', 8, array(
+               'type' => 'integer',
+               'fixed' => 0,
+               'unsigned' => false,
+               'primary' => true,
+               'autoincrement' => true,
+               'length' => 8,
+          ));
+          $this->hasColumn('url', 'string', 255, array(
+               'type' => 'string',
+               'fixed' => 0,
+               'unsigned' => false,
+               'primary' => false,
+               'notnull' => true,
+               'autoincrement' => false,
+               'length' => 255,
+          ));
+          $this->hasColumn('email', 'string', 255, array(
+               'type' => 'string',
+               'fixed' => 0,
+               'unsigned' => false,
+               'primary' => false,
+               'notnull' => true,
+               'autoincrement' => false,
+               'length' => 255,
+          ));
+          $this->hasColumn('token', 'string', 255, array(
+               'type' => 'string',
+               'fixed' => 0,
+               'unsigned' => false,
+               'primary' => false,
+               'notnull' => true,
+               'autoincrement' => false,
+               'length' => 255,
+          ));
+          $this->hasColumn('is_active', 'integer', 1, array(
+               'type' => 'integer',
+               'fixed' => 0,
+               'unsigned' => false,
+               'primary' => false,
+               'default' => '0',
+               'notnull' => true,
+               'autoincrement' => false,
+               'length' => 1,
+          ));
+          $this->hasColumn('created_at', 'timestamp', 25, array(
+               'type' => 'timestamp',
+               'fixed' => 0,
+               'unsigned' => false,
+               'primary' => false,
+               'notnull' => true,
+               'autoincrement' => false,
+               'length' => 25,
+          ));
+          $this->hasColumn('updated_at', 'timestamp', 25, array(
+               'type' => 'timestamp',
+               'fixed' => 0,
+               'unsigned' => false,
+               'primary' => false,
+               'notnull' => true,
+               'autoincrement' => false,
+               'length' => 25,
+          ));
+     }
 
-    public function setUp()
-    {
-        parent::setUp();
-        $this->hasMany('JobeetCategoryAffiliate', array(
-             'local' => 'id',
-             'foreign' => 'affiliate_id'));
-    }
+     public function setUp()
+     {
+          parent::setUp();
+          $this->hasMany('JobeetCategory as JobeetCategories', array(
+               'refClass' => 'JobeetCategoryAffiliate',
+               'local' => 'affiliate_id',
+               'foreign' => 'category_id'
+          ));
+
+          $this->hasMany('JobeetCategoryAffiliate', array(
+               'local' => 'id',
+               'foreign' => 'affiliate_id'
+          ));
+
+          $timestampable0 = new Doctrine_Template_Timestampable();
+          $this->actAs($timestampable0);
+     }
 }
