@@ -7,6 +7,19 @@
  */
 class JobeetJobTable extends Doctrine_Table
 {
+    /**
+     * Returns the connection associated with this table (if any).
+     *
+     * @return Doctrine_Connection|null     the connection object
+     */
+    public function getConnection()
+    {
+        $connet = $this->_conn;
+
+        return $connet;
+    }
+
+
     static public $types = array(
         'full-time' => 'Full time',
         'part-time' => 'Part time',
@@ -94,5 +107,43 @@ class JobeetJobTable extends Doctrine_Table
         }
 
         return $affiliate->getActiveJobs();
+    }
+
+    public function getLuceneIndex()
+    {
+        ProjectConfiguration::registerZend();
+
+        if (file_exists($index = $this->getLuceneIndexFile())) {
+            return Zend_Search_Lucene::open($index);
+        } else {
+            return Zend_Search_Lucene::create($index);
+        }
+    }
+
+    public function getLuceneIndexFile()
+    {
+        return sfConfig::get('sf_data_dir') . '/job.' . sfConfig::get('sf_environment') . '.index';
+    }
+
+    public function getForLuceneQuery($query)
+    {
+        $hits = self::getLuceneIndex()->find($query);
+
+        $pks = array();
+        foreach ($hits as $hit) {
+            $pks[] = $hit->pk;
+        }
+
+        if (empty($pks)) {
+            return array();
+        }
+
+        $q = $this->createQuery('j')
+            ->whereIn('j.id', $pks)
+            ->limit(20);
+
+        $q = $this->addActiveJobsQuery($q);
+
+        return $q->execute();
     }
 }

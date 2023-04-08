@@ -62,18 +62,20 @@ JobeetJob:
     email:          job@example.com
 
 # Starts at the beginning of the line (no whitespace before)
-<?php for ($i = 100; $i <= 130; $i++): ?>
+<?php for ($i = 100; $i <= 230; $i++): ?>
   job_<?php echo $i ?>:
-    JobeetCategory: programming
-    company:      Company <?php echo $i."\n" ?>
+    JobeetCategory: <?php echo array("design", "programming", "manager", "administrator")[array_rand([0,1,2,3])] . "\n"; ?> 
+    company:      Company <?php echo $i."\n"; ?>
     position:     Web Developer
     location:     Paris, France
     description:  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
     how_to_apply: |
-      Send your resume to lorem.ipsum [at] company_<?php echo $i ?>.sit
-    is_public:    true
-    is_activated: true
+      Send your resume to lorem.ipsum [at] company_<?php echo $i; ?>.sit
+    is_public:    false
+    is_activated: fasle
     token:        job_<?php echo $i."\n" ?>
     email:        job@example.com
+    type: <?php echo array( 'full-time' , 'part-time', 'freelance' )[array_rand([0,1,2])] . "\n"; ?>
+    expires_at: 2023-05-10
  
 <?php endfor ?>
